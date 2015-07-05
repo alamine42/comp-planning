@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from pytumblr import TumblrRestClient
 
 # Create application object
@@ -25,7 +25,7 @@ def view_week():
 
     last_seven_posts_json = client.posts('cfsacompetition.tumblr.com', type='text', limit=7)
 
-    return str(last_seven_posts_json)
+    return render_template('index.html', title="Week View")
 
 @app.route("/name/<name>")
 def index(name):
