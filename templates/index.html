@@ -1,8 +1,18 @@
-<html>
-  <head>
-    <title>{{ title }}</title>
-  </head>
-  <body>
-      <h1>This week's WODs</h1>
-  </body>
-</html>
+{% extends "template.html" %}
+{% block content %}
+    
+    <div class="starter-template">
+        <h1>CFSA Competition Programming</h1>
+        <br />
+    </div>
+
+    <div class="row">
+    {% for key, val in posts.items() %}
+        {% if 'Rest Day' in val.body %}
+            <div class="col-lg-1">{{ val.body | safe }}</div>
+        {% else %}
+            <div class="col-lg-2">{{ val.body | safe }}</div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}

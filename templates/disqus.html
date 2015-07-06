@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+{% block content %}
+    
+    <div class="starter-template">
+        <h1>Disqus Threads</h1>
+        <br />
+    </div>
+
+    <ul>
+    {% for key, val in threads.items() %}
+        <li>{{ key }} - {{ val }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

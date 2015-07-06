@@ -1,0 +1,12 @@
+disqus-python==0.4.2
+Flask==0.10.1
+httplib2==0.9.1
+httpretty==0.8.10
+itsdangerous==0.24
+Jinja2==2.7.3
+MarkupSafe==0.23
+oauth2==1.5.211
+PyTumblr==0.0.6
+requests==2.7.0
+simplejson==3.7.3
+Werkzeug==0.10.4
