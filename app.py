@@ -25,6 +25,25 @@ def pull_disqus():
 
     return filtered_dict
 
+def pull_disqus_comments(thread_id):
+
+    query_string = 'https://disqus.com/api/3.0/threads/listPosts.json?thread=' + thread_id + '&api_key=HniEaWj7WrLq5litkDwbHALAduc405zJ0SSgPQhScXYjC0Dx2ImHWz2AXecY7BH3'
+
+    comments_results = requests.get(query_string)
+    comments_results_dict = json.loads(comments_results.text)
+
+    filtered_comments_dict = {}
+
+    for comment in comments_results_dict['response']:
+
+        filtered_comments_dict[ comment['id'] ] = {
+            'author': comment['author']['name'],
+            'message': comment['message'],
+            'raw_message': comment['raw_message']
+        }
+
+    return filtered_comments_dict
+
 def pull_tumblr(post_id):
 
     client = TumblrRestClient(
@@ -42,13 +61,15 @@ def pull_tumblr(post_id):
 
 def create_master():
 
+    # Fetch the threads for the past 7 days
     this_week_master_dict = pull_disqus()
-    print "THIS IS THE DICT BEFORE TUMBLR"
-    print this_week_master_dict
+    # print "THIS IS THE DICT BEFORE TUMBLR"
+    # print this_week_master_dict
 
-    for thread in this_week_master_dict.values():
-        print "THREAD"
-        print thread
+    # For each thread, just take the parameters you want
+    for thread_key, thread in this_week_master_dict.items():
+        # print "THREAD"
+        # print thread
 
         tumblr_post_id = thread['tumblr_post_id']
         tumblr_post = pull_tumblr(tumblr_post_id)
@@ -57,6 +78,9 @@ def create_master():
         thread['tumblr_post_timestamp'] = tumblr_post_short['timestamp']
         thread['tumblr_post_title'] = tumblr_post_short['title']
         thread['tumblr_post_date'] = tumblr_post_short['date']
+
+        # Pull the comments for this thread
+        thread['comments'] = pull_disqus_comments(thread_key)
 
     return this_week_master_dict
 
@@ -67,10 +91,10 @@ def create_master():
 def view_week():
 
     this_week_dict = create_master()
-    print this_week_dict
+    # print this_week_dict
 
     ordered_posts = collections.OrderedDict(sorted(this_week_dict.items()))
-    return render_template('disqus.html', threads = ordered_posts )
+    return render_template('index.html', threads = ordered_posts )
 
 @app.route("/disqus")
 def get_disqus_threads():

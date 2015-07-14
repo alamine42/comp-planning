@@ -7,12 +7,44 @@
     </div>
 
     <div class="row">
-    {% for key, val in posts.items() %}
-        {% if 'Rest Day' in val.body %}
-            <div class="col-lg-1">{{ val.body | safe }}</div>
+    {% for key, val in threads.items() %}
+        {% if 'Rest Day' in val.tumblr_post_body %}
+            <div class="col-lg-1">Rest Day</div>
         {% else %}
-            <div class="col-lg-2">{{ val.body | safe }}</div>
+            <div class="col-lg-2">{{ val.tumblr_post_body | safe }}</div>
         {% endif %}
     {% endfor %}
     </div>
+
+    <br />
+    <a href="#" onclick="toggle_visibility('comments');">Toggle Comments</a>
+    <br />
+    <br />
+
+    <div class="row" id="comments" style="display:none">
+    {% for key, val in threads.items() %}
+        {% if 'Rest Day' in val.tumblr_post_body %}
+            <div class="col-lg-1">Rest Day</div>
+        {% else %}
+            <div class="col-lg-2">
+            {% for comment in val.comments.values() %}
+                <div><b>{{ comment.author }}</b></div>
+                <div>{{ comment.message | safe }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+    <!--
+        function toggle_visibility(id) {
+           var e = document.getElementById(id);
+           if(e.style.display == 'block')
+              e.style.display = 'none';
+           else
+              e.style.display = 'block';
+        }
+    //-->
+    </script>
 {% endblock %}
