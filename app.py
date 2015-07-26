@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 def pull_disqus():
-    result = requests.get('https://disqus.com/api/3.0/forums/listThreads.json?forum=cfsacompetitors&api_key=HniEaWj7WrLq5litkDwbHALAduc405zJ0SSgPQhScXYjC0Dx2ImHWz2AXecY7BH3&limit=7')
+    result = requests.get('https://disqus.com/api/3.0/forums/listThreads.json?forum=cfsacompetitors&api_key=HniEaWj7WrLq5litkDwbHALAduc405zJ0SSgPQhScXYjC0Dx2ImHWz2AXecY7BH3&limit=6')
     result_dict = json.loads(result.text)
     
     filtered_dict = {}

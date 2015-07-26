@@ -24,9 +24,9 @@
     <div class="row" id="comments" style="display:none">
     {% for key, val in threads.items() %}
         {% if 'Rest Day' in val.tumblr_post_body %}
-            <div class="col-lg-1">Rest Day</div>
+            <div class="col-md-1">Rest Day</div>
         {% else %}
-            <div class="col-lg-2">
+            <div class="col-md-2">
             {% for comment in val.comments.values() %}
                 <div><b>{{ comment.author }}</b></div>
                 <div>{{ comment.message | safe }}</div>
